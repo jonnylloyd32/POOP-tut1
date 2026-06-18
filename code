@@ -1,0 +1,272 @@
+#Jonny
+'''
+from car import Car
+car1 = Car("Corvete", 2025, "Blue", False)
+car2 = Car("Mustang", 2024, "Red", True)
+car3 = Car("Charger", 2026, "Yellow", True)
+car1.drive()
+car1.stop()
+car1.describe()
+
+
+class Student:
+    class_year = 2024
+    num_students = 0
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        Student.num_students += 1
+       
+    def get_grade(self):
+        return self.grade
+
+student1 = Student("Spongebob", 30)
+student2 = Student("Parick", 35)  
+student3 = Student("Squidward", 55)
+student4 = Student("Sandy", 27)
+print(f"my grafuating clas of {Student.class_year} has {Student.num_students} students")
+print(student1.name)
+print(student2.name)
+print(student3.name)
+print(student4.name)
+
+
+class Animal:
+    def __init__(self, name):
+        self.name = name
+        self.is_alive = True
+    def eat(self):
+        print(f"{self.name} is eating")
+
+    def sleep(self):
+        print(f"{self.name} is asleep")
+
+class Dog(Animal):
+    def bark(self):
+        print(f"{self.name} is barking")   
+
+class Cat(Animal):
+    def meow(self):
+        print(f"{self.name} is meowing")
+class Mouse(Animal):
+    def squeak(self):
+        print(f"{self.name} is squeaking")
+
+dog = Dog("Scooby")
+cat = Cat("Garfield")
+mouse = Mouse("Mickey")
+print(dog.sleep())
+
+#Multi parent classes
+
+class Animal:
+    def __init__(self, name):
+        self.name = name
+        self.is_alive = True        
+    def eat(self):
+        print(f"{self.name} is eating")
+    def sleep(self):
+        print(f"{self.name} is sleeping")
+
+class Prey(Animal):
+    def flee(self):
+        print(f"{self.name} is fleeing")
+class Predator(Animal):
+    def hunt(self):
+        print(f"{self.name} is hunting")
+class Rabbit(Prey):
+    pass
+    
+class Hawk(Predator):
+    pass
+
+class Fish(Prey, Predator):
+    pass
+
+rabbit = Rabbit("Bugs")
+hawk = Hawk("Tony")
+fish = Fish("Nemo")
+rabbit.flee()
+
+#abstract classes
+
+from abc import ABC, abstractmethod
+
+class Vehicle(ABC):
+    @abstractmethod
+    def go(self):
+        pass
+    
+    @abstractmethod
+    def stop(self):
+        pass
+
+class Car(Vehicle):
+    def go(self):
+        print("You drive the car")
+    def stop(self):
+        print("You stop the car")
+
+class Motorcycle(Vehicle):
+    def go(self):
+        print("You drive the motorcycle")
+    def stop(self):
+        print("You stop the motorcycle")
+
+class Boat(Vehicle):
+    def go(self):
+        print("You sail the boat")
+    def stop(self):
+        print("You anchor the boat")
+
+car = Car()
+
+
+#super
+
+class Shape:
+    def __init__(self, colour, is_filled):
+        self.colour = colour
+        self.is_filled = is_filled
+
+    def describe(self):
+        print(f"It is {self.colour} and {'filled' if self.is_filled else 'not filled'}") 
+
+class Circle(Shape):
+    def __init__(self, colour, is_filled, radius):
+        super().__init__(colour, is_filled)
+        self.radius = radius
+
+    def describe(self):
+        super().describe()
+        print(f"It is a circle with an area of {3.14 * self.radius ** 2}cm^2")    
+
+class Square(Shape):
+    def __init__(self, colour, is_filled, width):
+        super().__init__(colour, is_filled)
+        self.width = width
+    def describe(self):
+        print(f"It is a square with an area of {self.width ** 2}cm^2")
+
+class Triangle(Shape):
+    def __init__(self, colour, is_filled, width, height):
+        super().__init__(colour, is_filled)
+        self.width = width
+        self.height = height
+    def describe(self):
+        print(f"It is a triangle with an area of {0.5 * self.width * self.height}cm^2")
+
+
+circle = Circle(colour = "Red", is_filled = True, radius = 5)
+square = Square(colour = "Blue", is_filled = False, width = 6)
+triangle = Triangle(colour = "Green", is_filled = True, width = 4, height = 3 )
+print(circle.colour)
+print(square.is_filled)
+print(circle.describe())
+
+
+#polymorphism
+from abc import ABC, abstractmethod
+
+
+class Shape:
+    @abstractmethod
+    def area(self):
+        pass
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    def area(self):
+        return 3.14 * self.radius ** 2
+
+
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    
+
+    def area(self):
+        return self.side ** 2
+
+class Triangle(Shape):
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
+
+    def area(self):
+        return 0.5 * self.base * self.height
+
+class Pizza(Circle):
+    def __init__(self, topping, radius):
+        super().__init__(radius)
+        self.topping = topping
+        self.radius = radius
+
+#circle = Circle()
+shapes = [Circle(4), Square(5), Triangle(6, 7), Pizza("Peperoni", 15)]
+for shape in shapes:
+    print(f"{shape.area()}cm^2")
+
+
+#duck typing
+
+class Animal:
+    alive = True
+
+class Dog(Animal):
+    def speak(self):
+        print("Woof!")
+class Cat(Animal):
+    def speak(self):
+        print("Meow!")
+
+class Car:
+    def speak(self):
+        print("Honk!")
+    alive = False
+
+animals = [Dog(), Cat(), Car()]
+for animal in animals:
+    animal.speak()
+    print(animal.alive)
+
+
+
+#aggregation
+
+
+
+class Library:
+    def __init__(self, name):
+        self.name = name
+        self.books = []
+
+    def add_book(self, book):
+        self.books.append(book)
+
+    def list_books(self):
+        return[f"{book.title} by {book.author}" for book in self.books]
+
+class Book:
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+
+library = Library("New York Public Library")
+
+book1 = Book("Harry Potter", "J.K. Rowling")
+book2 = Book("Hobbit", "J.R.R. Tolkien")
+book3 = Book("colour of magic", "Terry Pratchett")
+
+library.add_book(book1)
+library.add_book(book2)
+library.add_book(book3)
+
+print(library.name)
+
+for book in library.list_books():
+    print(book)
+
+'''
+
